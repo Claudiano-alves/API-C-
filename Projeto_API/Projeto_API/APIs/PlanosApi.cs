@@ -13,18 +13,18 @@ public static class PlanosApi
 
     group.MapPost("/", async (Plano Plano, BancoDeDados db) =>
       {
-        // Tratamento para salvar endereços incluindo cliente.
-        if (Plano.Cliente is not null)
+        // Tratamento para salvar endereços incluindo Usuario.
+        if (Plano.Usuario is not null)
         {
-          var cliente = await db.Clientes.FindAsync(Plano.Cliente.Id);
-          if (cliente is not null)
+          var Usuario = await db.Usuarios.FindAsync(Plano.Usuario.Id);
+          if (Usuario is not null)
           {
-            Plano.Cliente = cliente;
+            Plano.Usuario = Usuario;
           }
         }
         else
         {
-          return Results.BadRequest("Cliente com Id é obrigatório");
+          return Results.BadRequest("Usuario com Id é obrigatório");
         }
 
         db.Planos.Add(Plano);
@@ -41,26 +41,24 @@ public static class PlanosApi
         var Plano = await db.Planos.FindAsync(id);
         if (Plano is null)
         {
-            return Results.NotFound();
+          return Results.NotFound();
         }
-        Plano.Rua = PlanoAlterado.Rua;
-        Plano.Numero = PlanoAlterado.Numero;
-        Plano.Bairro = PlanoAlterado.Bairro;
-        Plano.Cidade = PlanoAlterado.Cidade;
-        Plano.CEP = PlanoAlterado.CEP;
+        Plano.valor = PlanoAlterado.valor;
+        Plano.plano = PlanoAlterado.plano;
+        Plano.Nome = PlanoAlterado.Nome;
 
-        // Tratamento para salvar endereços incluindo cliente.
-        if (Plano.Cliente is not null)
+        // Tratamento para salvar endereços incluindo Usuario.
+        if (Plano.Usuario is not null)
         {
-          var cliente = await db.Clientes.FindAsync(Plano.Cliente.Id);
-          if (cliente is not null)
+          var Usuario = await db.Usuarios.FindAsync(Plano.Usuario.Id);
+          if (Usuario is not null)
           {
-            Plano.Cliente = cliente;
+            Plano.Usuario = Usuario;
           }
         }
         else
         {
-          return Results.BadRequest("Cliente com Id é obrigatório");
+          return Results.BadRequest("Usuario com Id é obrigatório");
         }
 
         //update....
